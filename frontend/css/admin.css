@@ -1,0 +1,335 @@
+/* =========================
+   CONFIGURAÇÃO GERAL
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+
+    font-family: "Segoe UI", Arial, sans-serif;
+
+    background: linear-gradient(
+        135deg,
+        #35439f,
+        #4053b5,
+        #4a5dbb
+    );
+}
+
+/* =========================
+   CARD DO LOGIN
+========================= */
+
+.container {
+    width: 100%;
+    max-width: 500px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background: #ffffff;
+
+    padding: 40px 35px;
+
+    border-radius: 28px;
+
+    box-shadow:
+        0 15px 45px rgba(15, 25, 90, 0.20),
+        0 0 25px rgba(100, 130, 255, 0.12);
+
+    animation: aparecer 0.5s ease;
+}
+
+/* =========================
+   LOGO
+========================= */
+
+.logo-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+
+    margin-bottom: 20px;
+}
+
+/* LOGO DO ADMIN - QUADRADA E BEM ARREDONDADA */
+.logo-login img {
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
+    border-radius: 40px;
+    display: block;
+    margin: 20px auto;
+}
+
+/* =========================
+   TÍTULO
+========================= */
+
+.container h2 {
+    width: 100%;
+
+    text-align: center;
+
+    font-size: 30px;
+    font-weight: 700;
+
+    color: #3f50bf;
+
+    margin-bottom: 30px;
+}
+
+/* =========================
+   CAMPOS
+========================= */
+
+.container input {
+    width: 100%;
+    height: 75px;
+
+    padding: 0 22px;
+
+    margin-bottom: 20px;
+
+    border: 2px solid #d0d0d0;
+    border-radius: 17px;
+
+    background: #ffffff;
+
+    font-size: 19px;
+    color: #222;
+
+    outline: none;
+
+    transition: 0.3s ease;
+}
+
+.container input::placeholder {
+    color: #777;
+}
+
+/* Brilho ao clicar */
+
+.container input:focus {
+    border-color: #4658c8;
+
+    box-shadow:
+        0 0 0 4px rgba(69, 87, 200, 0.12),
+        0 0 15px rgba(69, 87, 200, 0.12);
+}
+
+/* =========================
+   BOTÃO ENTRAR
+========================= */
+
+.container button {
+    width: 100%;
+    height: 75px;
+
+    border: none;
+    border-radius: 17px;
+
+    background: linear-gradient(
+        110deg,
+        #4968cb,
+        #4148c8
+    );
+
+    color: #ffffff;
+
+    font-size: 23px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 6px 18px rgba(65, 77, 190, 0.20);
+
+    transition: all 0.3s ease;
+}
+
+.container button:hover {
+    transform: translateY(-3px);
+
+    background: linear-gradient(
+        110deg,
+        #5678df,
+        #4d53d9
+    );
+
+    box-shadow:
+        0 8px 25px rgba(65, 77, 190, 0.35),
+        0 0 15px rgba(100, 125, 255, 0.25);
+}
+
+.container button:active {
+    transform: scale(0.98);
+}
+
+/* =========================
+   ANIMAÇÃO
+========================= */
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================
+   CELULAR
+========================= */
+
+@media (max-width: 500px) {
+
+    body {
+        padding: 15px;
+    }
+
+    .container {
+        padding: 30px 22px;
+        border-radius: 23px;
+    }
+
+    .logo-login img {
+        width: 190px;
+    }
+
+    .container h2 {
+        font-size: 25px;
+    }
+
+    .container input {
+        height: 65px;
+        font-size: 17px;
+    }
+
+    .container button {
+        height: 65px;
+        font-size: 20px;
+    }
+}
+/* ==========================================
+   PALETA SANTA SAÚDE - ADMIN
+   SOBRESCRITA FINAL
+========================================== */
+
+/* FUNDO */
+body {
+    background: linear-gradient(
+        135deg,
+        #344B87,
+        #202B59
+    );
+}
+
+/* CARD PRINCIPAL */
+.container {
+    background: #ffffff;
+    border-radius: 30px;
+}
+
+/* TÍTULOS */
+.container h1,
+.container h2 {
+    color: #202B59;
+}
+
+/* BOTÕES - COR PRINCIPAL */
+.container button {
+    background: linear-gradient(
+        135deg,
+        #344B87,
+        #202B59
+    );
+
+    color: #ffffff;
+    border: none;
+    border-radius: 18px;
+}
+
+/* BOTÕES - HOVER */
+.container button:hover {
+    background: linear-gradient(
+        135deg,
+        #45B9E8,
+        #344B87
+    );
+
+    transform: translateY(-2px);
+}
+
+/* BOTÃO ACESSAR ALMOXARIFADO */
+.container .btn-almoxerifado {
+    background: linear-gradient(
+        135deg,
+        #344B87,
+        #202B59
+    );
+
+    color: #ffffff;
+    border-radius: 18px;
+    border: none;
+}
+
+/* CAMPOS DE ENTRADA E SELEÇÃO */
+.container input,
+.container select {
+    border: 2px solid #D4E3F1;
+    border-radius: 15px;
+    background: #F8FBFE;
+    color: #202B59;
+}
+
+/* FOCO NOS CAMPOS */
+.container input:focus,
+.container select:focus {
+    border-color: #45B9E8;
+    outline: none;
+
+    box-shadow:
+        0 0 0 3px rgba(69, 185, 232, 0.18);
+}
+
+/* CARDS DOS USUÁRIOS */
+.container .card {
+    background: #EAF5FC;
+    border: 1px solid #D4E3F1;
+    border-radius: 18px;
+    color: #202B59;
+}
+
+/* LINKS */
+.container a {
+    color: #45B9E8;
+}
+
+/* SUCESSO */
+.container .sucesso {
+    color: #16835D;
+}
+
+/* ERRO */
+.container .erro {
+    color: #C0392B;
+}

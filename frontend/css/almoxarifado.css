@@ -1,0 +1,835 @@
+
+/* ==========================================
+   HOSPITAL PRO - ALMOXARIFADO
+   TEMA: TECNOLÓGICO / AZUL ELÉTRICO
+========================================== */
+
+:root {
+    --navy: #071b49;
+    --navy-2: #102c68;
+    --blue: #1764f5;
+    --blue-light: #3985ff;
+    --blue-soft: #e9f1ff;
+    --purple: #4648c8;
+
+    --background: #edf3ff;
+    --white: #ffffff;
+    --dark: #102750;
+    --text: #405575;
+    --muted: #8192ad;
+    --border: #d9e5fa;
+
+    --green: #0bb88b;
+    --orange: #ff9800;
+    --red: #ed3157;
+
+    --shadow: 0 8px 25px rgba(20, 57, 125, .09);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background:
+        radial-gradient(circle at 10% 15%, #dce9ff 0, transparent 30%),
+        radial-gradient(circle at 90% 80%, #e0eaff 0, transparent 35%),
+        var(--background);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+/* ==========================================
+   CABEÇALHO TECNOLÓGICO
+========================================== */
+
+.navbar {
+    background:
+        linear-gradient(110deg, #06163e, #102c70 65%, #071b49);
+    min-height: 82px;
+    padding: 13px 4%;
+    color: white;
+    border-bottom: 2px solid #1764f5;
+    box-shadow: 0 5px 22px rgba(4, 24, 68, .25);
+    position: relative;
+    overflow: hidden;
+}
+
+.navbar::after {
+    content: "";
+    position: absolute;
+    right: 10%;
+    top: -80px;
+    width: 400px;
+    height: 180px;
+    border: 1px solid rgba(49, 130, 255, .25);
+    transform: skewX(-40deg);
+    pointer-events: none;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+    z-index: 1;
+}
+
+.logo-icon {
+    width: 55px;
+    height: 55px;
+    border-radius: 13px;
+    background: linear-gradient(135deg, #398aff, #1244bd);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 18px rgba(37, 116, 255, .4);
+}
+
+.logo-icon::before {
+    content: "✚";
+    color: white;
+    font-size: 29px;
+    font-weight: bold;
+}
+
+.nav-brand h1 {
+    color: white;
+    font-size: 22px;
+    font-weight: 750;
+    letter-spacing: -.4px;
+}
+
+.nav-brand span {
+    display: block;
+    color: #b9d1ff;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.user-pill {
+    margin-left: auto;
+    padding: 10px 17px;
+    border: 1px solid rgba(103, 157, 255, .4);
+    background: rgba(45, 104, 220, .25);
+    color: white !important;
+    border-radius: 25px;
+    font-size: 12px;
+}
+
+.btn-nav {
+    text-decoration: none;
+    background: white;
+    color: var(--navy);
+    padding: 11px 23px;
+    border-radius: 9px;
+    font-weight: 750;
+    font-size: 13px;
+    transition: .3s;
+}
+
+.btn-nav:hover {
+    background: #dce9ff;
+    transform: translateY(-2px);
+}
+
+/* ==========================================
+   ALERTA
+========================================== */
+
+.alerta-estoque {
+    max-width: 1450px;
+    margin: 25px auto;
+    padding: 16px 20px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    background: #fff5e5;
+    border: 1px solid #ffc76a;
+    border-left: 5px solid var(--orange);
+    border-radius: 11px;
+
+    color: #985c08;
+    font-size: 13px;
+}
+
+.alerta-estoque strong {
+    font-size: 14px;
+}
+
+/* ==========================================
+   ESTATÍSTICAS
+========================================== */
+
+.stats-btn {
+    display: contents;
+}
+
+.stats-card,
+.stat-card {
+    display: inline-flex;
+    vertical-align: top;
+    width: calc(25% - 22px);
+    min-height: 105px;
+    margin: 12px 9px 20px;
+    padding: 20px;
+
+    align-items: center;
+    gap: 17px;
+
+    background: rgba(255, 255, 255, .88);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+
+    box-shadow: var(--shadow);
+    transition: .3s;
+}
+
+.stats-card:hover,
+.stat-card:hover {
+    transform: translateY(-4px);
+    border-color: #9bbcff;
+    box-shadow: 0 12px 28px rgba(23, 100, 245, .13);
+}
+
+.stat-icon {
+    width: 51px;
+    height: 51px;
+    min-width: 51px;
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-icon::before {
+    font-family: Arial, sans-serif;
+    font-size: 23px;
+}
+
+.stat-icon.purple {
+    background: #e9eaff;
+    color: #5652d7;
+}
+
+.stat-icon.purple::before {
+    content: "▤";
+}
+
+.stat-icon.green {
+    background: #ddf8ef;
+    color: var(--green);
+}
+
+.stat-icon.green::before {
+    content: "✓";
+}
+
+.stat-icon.orange {
+    background: #fff0d9;
+    color: var(--orange);
+}
+
+.stat-icon.orange::before {
+    content: "△";
+}
+
+.stat-icon.red {
+    background: #ffe5eb;
+    color: var(--red);
+}
+
+.stat-icon.red::before {
+    content: "×";
+}
+
+.stat-value {
+    color: var(--navy);
+    font-size: 29px;
+    font-weight: 800;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 5px;
+}
+
+/* ==========================================
+   ORGANIZAÇÃO PRINCIPAL
+========================================== */
+
+.container {
+    max-width: 1450px;
+    margin: auto;
+}
+
+.main-grid {
+    max-width: 1500px;
+    margin: 12px auto 35px;
+    padding: 0 20px;
+
+    display: grid;
+    grid-template-columns: 39% 61%;
+    gap: 20px;
+    align-items: start;
+}
+
+/* ==========================================
+   CARTÕES
+========================================== */
+
+.card {
+    background: rgba(255, 255, 255, .96);
+    border: 1px solid var(--border);
+    border-radius: 17px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    margin-bottom: 18px;
+    transition: .3s;
+}
+
+.card-header {
+    background: linear-gradient(110deg, #0b2357, #173c91);
+    color: white;
+    padding: 19px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 2px solid #287aff;
+}
+
+.card-header h2 {
+    color: white;
+    font-size: 17px;
+    font-weight: 750;
+}
+
+.card > h2 {
+    padding: 19px 22px;
+    background: linear-gradient(110deg, #0b2357, #173c91);
+    color: white;
+    font-size: 18px;
+    border-bottom: 2px solid var(--blue);
+}
+
+.card-body {
+    padding: 21px;
+}
+
+/* ==========================================
+   ABAS
+========================================== */
+
+.entrada.tabs {
+    display: flex;
+    gap: 8px;
+    padding: 5px;
+    background: #edf2ff;
+    border-radius: 11px;
+    margin-bottom: 22px;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 13px 9px;
+    border: none;
+    border-radius: 9px;
+    background: transparent;
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.tab-btn.active {
+    background: linear-gradient(120deg, #3483ff, #173fc3);
+    color: white;
+    box-shadow: 0 4px 12px rgba(23, 100, 245, .25);
+}
+
+.tab-btn:hover:not(.active) {
+    background: #dce8ff;
+}
+
+/* ==========================================
+   FORMULÁRIOS
+========================================== */
+
+.form-group {
+    margin-bottom: 17px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--dark);
+    font-size: 13px;
+    font-weight: 750;
+}
+
+.form-group small {
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 400;
+}
+
+.form-control {
+    width: 100%;
+    padding: 13px 15px;
+
+    border: 1px solid #cbdafa;
+    border-radius: 10px;
+
+    background: #f9fbff;
+    color: var(--navy);
+
+    font-size: 13px;
+    outline: none;
+    transition: .3s;
+}
+
+.form-control:focus {
+    background: white;
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(23, 100, 245, .12);
+}
+
+.form-control::placeholder {
+    color: #91a3c1;
+}
+
+select.form-control {
+    cursor: pointer;
+}
+
+/* ==========================================
+   BOTÕES
+========================================== */
+
+button {
+    font-family: inherit;
+}
+
+.btn-full {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 750;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.btn-purple {
+    background: linear-gradient(110deg, #3183ff, #183fc1);
+    color: white;
+    box-shadow: 0 5px 13px rgba(23, 100, 245, .22);
+}
+
+.btn-purple:hover {
+    background: linear-gradient(110deg, #1764ed, #102e9c);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(23, 100, 245, .3);
+}
+
+.btn-sm {
+    padding: 9px 13px;
+    border: none;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.btn-secondary {
+    background: #e8efff;
+    color: var(--blue);
+}
+
+.btn-secondary:hover {
+    background: #d6e4ff;
+}
+
+.btn-success {
+    background: #ddf8ed;
+    color: #078b65;
+}
+
+.btn-danger-sm {
+    background: #ffe8ed;
+    color: #dc3154;
+}
+
+.btn-em {
+    padding: 9px 13px;
+    border-radius: 8px;
+    border: 1px solid #cbdafa;
+    background: #edf3ff;
+    color: var(--blue);
+    cursor: pointer;
+}
+
+/* ==========================================
+   HISTÓRICO
+========================================== */
+
+#historicoEntradas {
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+.empty-state {
+    padding: 30px 15px;
+    text-align: center;
+    color: var(--muted);
+}
+
+.empty-icon {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.empty-state p {
+    font-size: 13px;
+}
+
+/* ==========================================
+   BUSCA
+========================================== */
+
+.search-bar {
+    margin-bottom: 17px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 14px 17px;
+    border: 1px solid #cbdafa;
+    border-radius: 10px;
+    background: #f8faff;
+    color: var(--navy);
+    font-size: 13px;
+    outline: none;
+    transition: .3s;
+}
+
+.search-input:focus {
+    background: white;
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(23, 100, 245, .10);
+}
+
+/* ==========================================
+   FILTROS
+========================================== */
+
+.filtar-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-bottom: 20px;
+}
+
+.chip {
+    padding: 9px 16px;
+    border: 1px solid #cbdafa;
+    border-radius: 25px;
+    background: white;
+    color: var(--navy);
+    font-size: 12px;
+    font-weight: 650;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.chip:hover {
+    background: #e9f1ff;
+    border-color: var(--blue);
+}
+
+.chip.active {
+    background: linear-gradient(120deg, #3483ff, #173fc3);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 3px 10px rgba(23, 100, 245, .2);
+}
+
+/* ==========================================
+   TABELA DE ESTOQUE
+========================================== */
+
+.estoque-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+}
+
+.estoque-table thead {
+    background: #e8efff;
+}
+
+.estoque-table th {
+    padding: 15px 12px;
+    text-align: left;
+    color: var(--navy);
+    font-size: 12px;
+    font-weight: 800;
+    border-bottom: 1px solid var(--border);
+}
+
+.estoque-table td {
+    padding: 14px 12px;
+    border-bottom: 1px solid #e5ecfa;
+    font-size: 13px;
+    color: var(--text);
+}
+
+.estoque-table tbody tr {
+    transition: .2s;
+}
+
+.estoque-table tbody tr:hover {
+    background: #f0f5ff;
+}
+
+.med-name {
+    color: var(--navy);
+    font-weight: 750;
+}
+
+.med-cat {
+    color: #7184a5;
+    font-size: 12px;
+}
+
+.stock-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 11px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 750;
+}
+
+.stock-normal {
+    background: #dcf8ed;
+    color: #078c67;
+}
+
+.stock-low {
+    background: #fff0d9;
+    color: #bd790e;
+}
+
+.stock-critical {
+    background: #ffe5e9;
+    color: #d92c50;
+}
+
+.stock-empty {
+    background: #ffe5e9;
+    color: #d92c50;
+}
+
+.action-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 7px;
+}
+
+/* ==========================================
+   MODAL
+========================================== */
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+
+    background: rgba(4, 19, 54, .65);
+    backdrop-filter: blur(5px);
+
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal-overlay.open {
+    display: flex;
+}
+
+.modal-box {
+    width: 100%;
+    max-width: 440px;
+    padding: 27px;
+    background: white;
+    border: 1px solid #d5e3ff;
+    border-radius: 17px;
+    box-shadow: 0 20px 60px rgba(0, 20, 65, .25);
+    animation: modalEntrada .25s ease;
+}
+
+.modal-title {
+    color: var(--navy);
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 22px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+@keyframes modalEntrada {
+    from {
+        opacity: 0;
+        transform: translateY(15px) scale(.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ==========================================
+   TOAST / NOTIFICAÇÕES
+========================================== */
+
+.toast {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    z-index: 2000;
+
+    padding: 15px 22px;
+    border-radius: 10px;
+
+    background: var(--navy);
+    color: white;
+
+    font-size: 13px;
+    font-weight: 650;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(15px);
+    transition: .3s;
+    box-shadow: 0 7px 20px rgba(0, 20, 65, .2);
+}
+
+.toast.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.toast-success {
+    background: #078c67;
+}
+
+.toast-error {
+    background: #d92c50;
+}
+
+.toast-warning {
+    background: #d68a18;
+}
+
+/* ==========================================
+   ROLAGEM
+========================================== */
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #edf2fc;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #a8bfeb;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--blue);
+}
+
+/* ==========================================
+   RESPONSIVIDADE
+========================================== */
+
+@media (max-width: 1100px) {
+
+    .stats-card,
+    .stat-card {
+        width: calc(50% - 22px);
+    }
+
+    .main-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 650px) {
+
+    .navbar {
+        padding: 14px;
+    }
+
+    .nav-brand {
+        flex-wrap: wrap;
+    }
+
+    .nav-brand h1 {
+        font-size: 17px;
+    }
+
+    .user-pill {
+        margin-left: 0;
+    }
+
+    .stats-card,
+    .stat-card {
+        width: calc(100% - 18px);
+        margin: 9px;
+    }
+
+    .main-grid {
+        padding: 0 12px;
+    }
+
+    .card-body {
+        padding: 15px;
+    }
+
+    .card-header {
+        padding: 15px;
+    }
+
+    .estoque-table {
+        min-width: 600px;
+    }
+
+    .modal-box {
+        padding: 20px;
+    }
+}

@@ -1,0 +1,113 @@
+<!DOCTYPE html> 
+<html lang="pt-BR"> 
+
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+
+    <link rel="stylesheet" href="css/index.css">
+
+    <title>Sistema Hospitalar</title> 
+</head>
+
+<body>
+
+   <div class="container"> 
+
+      <img src="img/logo-santa-saude.png" alt="Santa Saúde Clínica Médica">
+    </div>
+    <a href="index.html" style="text-decoration: none; color:rgb(34, 123, 255);
+    font-size: 14px; display: inline-block; margin-bottom: 12px;">
+        -> Voltar para o login
+    </a>
+
+      <h2>🏥 Sistema Hospitalar</h2> 
+       <input 
+         id="usuario" 
+         type="text" 
+         placeholder="Usuário" >
+
+      <input id="senha" 
+         type="password" 
+         placeholder="Senha" >
+
+      <button onclick="login()">Entrar</button>
+
+  </div> 
+
+  <script> 
+
+      function login() { 
+   
+          const usuario = document.getElementById("usuario").value; 
+          const senha = document.getElementById("senha").value;
+    
+          if (usuario === "" || senha === "") { 
+          alert("Preencha o usuário e a senha."); 
+          return;
+       } 
+       
+       fetch("http://localhost:3000/login", { 
+           method: "POST", 
+       
+       headers: { 
+           "Content-Type": "application/json" 
+           }, 
+           
+           body: JSON.stringify({
+               usuario: usuario,
+               senha: senha 
+          }) 
+       }) 
+       
+       .then(response => { 
+        
+          if (!response.ok) { 
+              throw new Error("Usuário ou senha inválidos."); 
+          } 
+
+          return response.json();
+        })
+
+        .then(data => { 
+             
+            if (data.tipo === "triagem") { 
+                window.location.href = "triagem.html";
+          } 
+
+            else if (data.tipo === "medico") { 
+                window.location.href = "medico.html"; 
+          } 
+              
+          else if (data.tipo === "atendimento") { 
+              window.location.href = "atendimento.html";
+          } 
+            
+          else { 
+              alert("Tipo de usuário não reconhecido."); 
+          }  
+          
+        }) 
+        
+        .catch(error => { 
+            
+            console.error(error);
+           
+            alert("Erro ao conectar com o servidor."); 
+            
+            }); 
+            
+          } 
+
+        // Atalho secreto: Ctrl + Alt + A redireciona para admin2.html
+        document.addEventListener("keydown" , function(e) {
+          if (e.ctrlKey && e.altKey && (e.key === "e" || e.key === "A")) {
+            e.preventDefault();
+           window.location.href = "adimin.html";
+          }
+        });
+          
+        </script> 
+
+          </body> 
+          </html>

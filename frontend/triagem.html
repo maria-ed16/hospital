@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triagem Hospitalar</title>
+    <link rel="stylesheet" href="css/atend.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <header style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
+            <h2>🏥 Triagem Hospitalar</h2>
+            <button type="button" onclick="window.open('tv.html', '_blank')">
+                📺 Abrir Tela da TV
+            </button>
+        </header>
+
+        <section>
+            <h3>Pacientes cadastrados no Atendimento</h3>
+            <p>Clique em selecionar para preencher os dados da triagem.</p>
+
+            <div id="file-pacientes">
+                <p>Carregando pacientes...</p>
+            </div>
+
+            <button type="button" onclick="carregarPacientes()">
+                🔄 Atualizar lista
+            </button>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>Registrar Triagem</h2>
+
+            <form id="formTriagem">
+                <label for="nome">Nome do paciente</label>
+                <input id="nome" type="text" placeholder="Nome" required>
+
+                <label for="sintoma">Sintoma</label>
+                <select id="sintoma" required>
+                    <option value="">Selecione</option>
+                    <option value="dor_leve">Dor leve</option>
+                    <option value="resfriado">Resfriado</option>
+                    <option value="coriza">Coriza</option>
+                    <option value="tosse">Tosse</option>
+                    <option value="febre">Febre</option>
+                    <option value="vomito">Vômito</option>
+                    <option value="diarreia">Diarreia</option>
+                    <option value="falta_ar_moderada">Falta de ar moderada</option>
+                    <option value="falta_ar_grave">Falta de ar grave</option>
+                    <option value="infarto">Suspeita de infarto</option>
+                    <option value="avc">Suspeita de AVC</option>
+                    <option value="convulsao">Convulsão</option>
+                    <option value="hemorragia">Hemorragia</option>
+                </select>
+
+                <label for="temp">Temperatura (°C)</label>
+                <input id="temp" type="number" step="0.1"
+                       min="25" max="45" placeholder="Ex.: 36.5" required>
+
+                <label for="alergia">Alergias</label>
+                <input id="alergia" type="text" placeholder="Alergias ou nenhuma informada">
+
+                <label for="observacao">Observações</label>
+                <textarea id="observacao" placeholder="Observações"></textarea>
+
+                <div id="resultado"></div>
+
+                <button type="submit" id="btnSalvar">
+                    Salvar Triagem
+                </button>
+            </form>
+        </section>
+    </div>
+
+    <script>
+        const API = "http://localhost:3000";
+
+        async function carregarPacientes() {
+            const lista = document.getElementById("file-pacientes");
+            lista.textContent = "Carregando pacientes...";
+
+            try {
+                const resposta = await fetch(`${API}/atendimento`);
+
+                if (!resposta.ok) {
+                    throw new Error("Não foi possível consultar os pacientes.");
+                }
+
+                const pacientes = await resposta.json();
+                lista.innerHTML = "";
+
+                if (!Array.isArray(pacientes) || pacientes.length === 0) {
+                    lista.textContent = "Nenhum paciente cadastrado.";
+                    return;
+                }
+
+                pacientes.forEach(paciente => {
+                    const card = document.createElement("div");
+                    card.style.cssText =
+                        "border:1px solid #ddd;padding:12px;margin:10px 0;border-radius:8px;";
+
+                    const nome = document.createElement("strong");
+                    nome.textContent = paciente.nome;
+
+                    const dados = document.createElement("p");
+                    dados.textContent =
+                        `CPF: ${paciente.cpf} | Tipo: ${paciente.tipo}`;
+
+                    const botao = document.createElement("button");
+                    botao.type = "button";
+                    botao.textContent = "Selecionar paciente";
+                    botao.addEventListener("click", () => {
+                        document.getElementById("nome").value = paciente.nome;
+                        document.getElementById("nome").scrollIntoView({
+                            behavior: "smooth",
+                            block: "center"
+                        });
+                    });
+
+                    card.append(nome, dados, botao);
+                    lista.appendChild(card);
+                });
+            } catch (erro) {
+                console.error(erro);
+                lista.textContent =
+                    "Erro ao carregar pacientes. Confira se o servidor está ligado.";
+            }
+        }
+
+        document.getElementById("formTriagem").addEventListener("submit", async event => {
+            event.preventDefault();
+
+            const botao = document.getElementById("btnSalvar");
+            const resultado = document.getElementById("resultado");
+
+            const nome = document.getElementById("nome").value.trim();
+            const sintoma = document.getElementById("sintoma").value;
+            const temperatura = Number(document.getElementById("temp").value);
+            const alergia = document.getElementById("alergia").value.trim();
+            const observacao = document.getElementById("observacao").value.trim();
+
+            if (!nome || !sintoma || !Number.isFinite(temperatura)) {
+                resultado.textContent = "Preencha o nome, o sintoma e a temperatura.";
+                return;
+            }
+
+            botao.disabled = true;
+            resultado.textContent = "Salvando triagem...";
+
+            try {
+                const resposta = await fetch(`${API}/triagem`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        nome,
+                        sintoma,
+                        temperatura,
+                        alergia,
+                        observacao
+                    })
+                });
+
+                const data = await resposta.json();
+
+                if (!resposta.ok) {
+                    throw new Error(data.erro || "Erro ao salvar triagem.");
+                }
+
+                resultado.textContent = "Triagem salva com sucesso!";
+                document.getElementById("formTriagem").reset();
+            } catch (erro) {
+                console.error(erro);
+                resultado.textContent = erro.message || "Erro ao conectar com o servidor.";
+            } finally {
+                botao.disabled = false;
+            }
+        });
+
+        carregarPacientes();
+    </script>
+</body>
+</html>
+

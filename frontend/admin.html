@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Administração - Santa Saúde</title>
+
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+
+<body>
+
+    <!-- CONTAINER PRINCIPAL -->
+    <div class="container">
+
+        <!-- TOPO -->
+        <div class="topo-admin" style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        ">
+
+            <!-- VOLTAR PARA LOGIN -->
+            <a href="index.html"
+               style="text-decoration: none; color: rgb(34, 123, 255);
+               font-size: 14px; display: inline-block;">
+                ← Voltar para o login
+            </a>
+
+            <!-- ACESSAR ALMOXARIFADO -->
+            <button
+                type="button"
+                class="btn-almoxerifado"
+                onclick="window.location.href='almoxerifado.html'">
+
+                📦 Acessar Almoxarifado
+
+            </button>
+
+        </div>
+
+        <!-- LOGO -->
+        <div class="logo-login">
+
+            <img
+                src="1.png"
+                alt="Santa Saúde Clínica Médica"
+                style="max-width: 180px; height: auto;"
+                onerror="
+                    this.style.display='none';
+                    document.getElementById('erroLogo').style.display='block';
+                "
+            >
+
+            <p
+                id="erroLogo"
+                style="display:none; color:#c0392b; font-size:14px;">
+
+                Logo não encontrada. Confira o arquivo 1.png.
+
+            </p>
+
+        </div>
+
+        <!-- TÍTULO -->
+        <h1>Cadastro de Usuários</h1>
+
+        <p>
+            Gerencie os usuários e os setores do sistema hospitalar.
+        </p>
+
+        <!-- FORMULÁRIO -->
+        <form id="formulario">
+
+            <input
+                type="text"
+                id="usuario"
+                placeholder="Nome do usuário (login)"
+                required
+                autocomplete="off"
+            >
+
+            <input
+                type="password"
+                id="senha"
+                placeholder="Senha"
+                required
+            >
+
+            <select id="tipo" required>
+
+                <option value="">Selecione o setor</option>
+                <option value="atendimento">Atendimento</option>
+                <option value="triagem">Triagem</option>
+                <option value="medico">Médico</option>
+
+            </select>
+
+            <button type="submit">
+                Cadastrar usuário
+            </button>
+
+        </form>
+
+        <!-- MENSAGEM -->
+        <div id="mensagem"></div>
+
+        <hr>
+
+        <!-- LISTA DE USUÁRIOS -->
+        <h2>Usuários cadastrados</h2>
+
+        <div id="listaUsuarios">
+            <p>Carregando usuários...</p>
+        </div>
+
+    </div>
+
+
+    <script>
+
+        // =====================================
+        // CADASTRAR USUÁRIO
+        // =====================================
+
+        document.getElementById("formulario").addEventListener("submit", function(e) {
+
+            e.preventDefault();
+
+            const usuario = document.getElementById("usuario").value.trim();
+            const senha = document.getElementById("senha").value;
+            const tipo = document.getElementById("tipo").value;
+
+            const mensagem = document.getElementById("mensagem");
+
+            // VALIDAÇÃO
+            if (!usuario || !senha || !tipo) {
+
+                mensagem.textContent = "Preencha todos os campos.";
+                mensagem.className = "erro";
+
+                return;
+
+            }
+
+            mensagem.textContent = "Cadastrando usuário...";
+            mensagem.className = "";
+
+            fetch("/usuarios", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    usuario: usuario,
+                    senha: senha,
+                    tipo: tipo
+                })
+
+            })
+            .then(async res => {
+
+    const texto = await res.text();
+
+    let data = {};
+
+    if (texto.trim() !== "") {
+        try {
+            data = JSON.parse(texto);
+        } catch (erro) {
+            throw new Error("O servidor retornou uma resposta inválida.");
+        }
+    }
+
+    if (!res.ok) {
+        throw new Error(data.erro || "Não foi possível cadastrar o usuário.");
+    }
+
+    return data;
+
+})
+
+})
+
+
+            .then(() => {
+
+                mensagem.textContent = "Usuário cadastrado com sucesso!";
+                mensagem.className = "sucesso";
+
+                document.getElementById("formulario").reset();
+
+                carregandoUsuarios();
+
+            })
+
+            .catch(error => {
+
+                console.error("Erro ao cadastrar:", error);
+
+                mensagem.textContent = error.message;
+                mensagem.className = "erro";
+
+            });
+
+
+
+        // =====================================
+        // CARREGAR USUÁRIOS
+        // =====================================
+
+        function carregandoUsuarios() {
+
+            const div = document.getElementById("listaUsuarios");
+
+            div.innerHTML = "<p>Carregando usuários...</p>";
+
+            fetch("/usuarios")
+
+            .then(res => {
+
+                if (!res.ok) {
+
+                    throw new Error("Erro ao buscar usuários.");
+
+                }
+
+                return res.json();
+
+            })
+
+            .then(usuarios => {
+
+                div.innerHTML = "";
+
+                if (!Array.isArray(usuarios) || usuarios.length === 0) {
+
+                    div.innerHTML = "<p>Nenhum usuário cadastrado.</p>";
+
+                    return;
+
+                }
+
+                usuarios.forEach(u => {
+
+                    // CARD
+                    const card = document.createElement("div");
+
+                    card.className = "card";
+
+                    // USUÁRIO
+                    const nome = document.createElement("p");
+
+                    const nomeLabel = document.createElement("strong");
+                    nomeLabel.textContent = "Usuário: ";
+
+                    const nomeTexto = document.createElement("span");
+                    nomeTexto.textContent = u.usuario || "Não informado";
+
+                    nome.appendChild(nomeLabel);
+                    nome.appendChild(nomeTexto);
+
+                    // SETOR
+                    const setor = document.createElement("p");
+
+                    const setorLabel = document.createElement("strong");
+                    setorLabel.textContent = "Setor: ";
+
+                    const setorTexto = document.createElement("span");
+                    setorTexto.textContent = u.tipo || "Não informado";
+
+                    setor.appendChild(setorLabel);
+                    setor.appendChild(setorTexto);
+
+                    // ADICIONAR AO CARD
+                    card.appendChild(nome);
+                    card.appendChild(setor);
+
+                    // ADICIONAR À LISTA
+                    div.appendChild(card);
+
+                });
+
+            })
+
+            .catch(error => {
+
+                console.error("Erro ao carregar usuários:", error);
+
+                div.innerHTML = `
+                    <p class="erro">
+                        Não foi possível carregar os usuários.
+                        Verifique se o servidor está funcionando.
+                    </p>
+                `;
+
+            });
+
+        }
+
+
+        // =====================================
+        // CARREGAR AUTOMATICAMENTE AO ABRIR
+        // =====================================
+
+        carregandoUsuarios();
+
+    </script>
+
+</body>
+</html>
