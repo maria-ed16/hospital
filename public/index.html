@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+   <div class="container">
+        <header>
+            <h1>Painel de Alunos</h1>
+            <p>Demonstração de CRUD Frontend / Backend (Node.js)</p>
+            <button onclick="window.print()" style="margin-top: 1rem; padding: 10px 20px; font-weight: bold; cursor: pointer;
+            border-radius: 8px; border: none; background: white; color: var(--primary-color);">⬇️ Baixar PDF</button>
+        </header>
+
+        <main>
+            <section class="form-section">
+                <h2>Novo Aluno</h2>
+                <form id="aluno-form">
+                    <input type="hidden" id="aluno-id">
+
+                    <div class="input-group">
+                        <label for="nome">Nome Completo</label>
+                        <input type="text" id="nome" required placeholder="Ex: João da Silva">
+                    </div>
+                    <div class="input-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required placeholder="Ex: joão@gmail.com">
+                    </div>
+                    <div class="input-group">
+                        <label for="curso">Curso</label>
+                        <select id="curso" required>
+                            <option value="">Selecione um  curso...></curso></option>
+                            <option value="engenharia de software">Engenharia de Software</option>
+                            <option value="ciencia da computacao">Ciência da Computação</option>
+                        </select>
+                    </div>
+                    <div class="form-action">
+                        <button type="button" class="bnt-cancel" id="bnt-cancel">Cancelar Edição</button>
+                        <button type="submit" class="bnt-save" id="bnt-save">Salvar Aluno</button>
+                    </div>
+                </form>
+            </section>
+            <section class="list-section">
+                <h2>Alunos Cadastrados</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>Email</th>
+                                <th>Curso</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="alunos-tbody">
+                            <!-- Os alunos serão instalados aqui via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+
+    </body>
+</html>
